@@ -1,0 +1,47 @@
+mxlog:
+  - regx: |-
+      (?P<datetime>\d{8}\s\d{9}.\d{4})\s(?P<hostname>\S+)\s(?P<module>\S+)\s(?P<pid>\d+)\s\d+\s\d+\s(?P<level>\w+);(?P<event>MsgTrace)\(.+\) *(?P<msgtrc>[^:]+):
+    tmpl: mxlog_{{.module}}_{{.level}}_{{.event}}_total{id="{{.id}}",msgtrc="{{.msgtrc}}"}
+    list: []
+  - regx: |-
+      (?P<datetime>\d{8}\s\d{9}.\d{4})\s(?P<hostname>\S+)\s(?P<module>\S+)\s(?P<pid>\d+)\s\d+\s\d+\s(?P<level>\w+);(?P<event>\w+)\(.+\)
+    tmpl: mxlog_{{.module}}_{{.level}}_{{.event}}_total{id="{{.id}}"}
+    list: []
+mxstat:
+  - regx: |-
+      (?P<datetime>\d{8}\s\d{9}.\d{4})\s(?P<hostname>\S+)\s(?P<module>\S+)\s(?P<pid>\d+);(?P<event>\w+)\(.+\)\s+(?P<op_persec>\d+)/sec\s+(?P<avg_response_ms>\d+)\s+ms\s+
+    tmpl: mxstat_{{.module}}_{{.event}}_%s{id="{{.id}}"}
+    list: ["op_persec","avg_response_ms"]
+  - regx: |-
+      (?P<datetime>\d{8}\s\d{9}.\d{4})\s(?P<hostname>\S+)\s(?P<module>\S+)\s(?P<pid>\d+);(?P<event>\w+)\(.+\)\s+(?P<current>\d+)/(?P<min>\d+)/(?P<max>\d+)/(?P<mean>\d+)/(?P<variance>\d+)/(?P<thresh_exceeded_count>\d+)
+    tmpl: mxstat_{{.module}}_{{.event}}_%s{id="{{.id}}"}
+    list: ["current","max"]
+  - regx: >-
+      (?P<datetime>\d{8}\s\d{9}.\d{4})\s(?P<hostname>\S+)\s(?P<module>\S+)\s(?P<pid>\d+);(?P<event>\w+)\(.+\)[ ](?P<pool>\S+)[ ]W=(?P<Wavg>\d+)/(?P<Wmin>\d+)/(?P<Wmax>\d+)/(?P<Wvar>\d+)/(?P<Wthreshold>\d+)[
+      \s]S=(?P<Savg>\d+)/(?P<Smin>\d+)/(?P<Smax>\d+)/(?P<Svar>\d+)/(?P<Sthreshold>\d+)[ ]P=(?P<Pcur>\d+)/(?P<Pmin>\d+)/(?P<Pmax>\d+)/(?P<PcfgMin>\d+)/(?P<PcfgMax>\d+)/(?P<PcfgThreshold>\d+)/(?P<unknown>\d+)[
+      \s]Q=(?P<Qcur>\d+)/(?P<Qmin>\d+)/(?P<Qmax>\d+)/(?P<Qthreshold>\d+)/(?P<Qadd>\d+)/(?P<Qremove>\d+)/(?P<QnotAcquired>\d+)/(?P<QnotAcquiredThreshold>\d+) R=(?P<Rworking>\d+)/(?P<Ridle>\d+)/(?P<Rcreated>\d+)/(?P<Rdestroyed>\d+)/(?P<Rbegin>\d+)/(?P<Rend>\d+)
+    tmpl: mxstat_{{.module}}_{{.event}}_{{.pool}}_%s{id="{{.id}}"}
+    list: ["Wavg","Wmax","Qcur","Qmax"] 
+  - regx: |-
+      (?P<datetime>\d{8}\s\d{9}.\d{4})\s(?P<hostname>\S+)\s(?P<module>\S+)\s(?P<pid>\d+);(?P<event>\w+)\(.+\)\s+(?P<count>\d+)\s*$
+    tmpl: mxstat_{{.module}}_{{.event}}_%s{id="{{.id}}"}
+    list: ["count"] 
+moslog:
+  - regx: |-
+      (?P<timedate>[-0-9]+\s[0-9:,]+)[ ]\S*[ ](?P<level>\S+)\s+\[[^]]*\]\s(?P<class>\S+):(?P<method>\S+):(?P<line>\d+)
+    tmpl: moslog_{{.level}}_{{.class}}_{{.method}}_{{.line}}_total{id="{{.id}}"}
+    list: []
+mosstat:
+  - regx: |-
+      (?P<timedate>[-0-9]+\s[0-9:,]+)[ ]\S+[ ]\S*[ ](?P<service>\S+)\s+(?P<op>\S+) (?P<minns>\d+)/(?P<maxns>\d+)/(?P<avgns>\d+)\s+ns\s+(?P<err_count>\d+)/(?P<timeout_count>\d+)/(?P<total_count>\d+)
+    tmpl: mosstat_{{.service}}_{{.op}}_%s{id="{{.id}}"}
+    list: ["avgns","maxns","err_count","timeout_count","total_count"]
+rglog:
+  - regx: |-
+      (?P<datetime>\d{8}\s\d{9}.\d{4})\s(?P<hostname>\S+)\s(?P<module>\S+)\s(?P<pid>\d+)\s\d+\s\d+\s(?P<level>\w+);(?P<event>PerformanceShort)\(.+\)[^:]+:name=(?P<statname>[^:]+):slots=(?P<slots>[0-9,]+)$
+    tmpl: rglog_{{.module}}_{{.level}}_{{.event}}_stat_%s{id="{{.id}}"}
+    list: []
+  - regx: |-
+      (?P<datetime>\d{8}\s\d{9}.\d{4})\s(?P<hostname>\S+)\s(?P<module>\S+)\s(?P<pid>\d+)\s\d+\s\d+\s(?P<level>\w+);(?P<event>\w+)\(.+\)
+    tmpl: rglog_{{.module}}_{{.level}}_{{.event}}_total{id="{{.id}}"}
+    list: []

@@ -1,0 +1,16 @@
+files:
+- path: /opt/owm/imail/imail/log/mta.log
+  type: mxlog
+  id: mtalog1
+- path: /opt/owm/imail/imail/log/mta.stat
+  type: mxstat
+  id: mtastat1
+- path: /opt/owm/imail/imail/mxos/logs/mxos.log
+  type: moslog
+  id: moslog1
+- path: /opt/owm/imail/imail/mxos/logs/mxos.stats
+  type: mosstat
+  id: mosstat1
+- path: /opt/owm/imail/imail/mira/usr/store/logs/smtp.log
+  type: rglog
+  id: rglog1
