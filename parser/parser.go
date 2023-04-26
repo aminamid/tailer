@@ -204,6 +204,6 @@ func metricsHandler(w http.ResponseWriter, _ *http.Request) {
     defer metricsMutex.Unlock()
 
     metrics.WritePrometheus(w, false)
-    metrics.UnregisterAllMetrics()
+    //metrics.UnregisterAllMetrics()
 }
 
