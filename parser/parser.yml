@@ -33,7 +33,7 @@ moslog:
     list: []
 mosstat:
   - regx: |-
-      (?P<timedate>[-0-9]+\s[0-9:,]+)[ ]\S+[ ]\S*[ ](?P<service>\S+)\s+(?P<op>\S+) (?P<minns>\d+)/(?P<maxns>\d+)/(?P<avgns>\d+)\s+ns\s+(?P<err_count>\d+)/(?P<timeout_count>\d+)/(?P<total_count>\d+)
+      (?P<timedate>[-0-9]+\s[0-9:,]+)[ ]+(?P<service>\S+)\s+(?P<op>\S+) (?P<minns>\d+)/(?P<maxns>\d+)/(?P<avgns>\d+)\s+ns\s+(?P<err_count>\d+)/(?P<timeout_count>\d+)/(?P<total_count>\d+)
     tmpl: mosstat_{{.service}}_{{.op}}_%s{id="{{.id}}"}
     list: ["avgns","maxns","err_count","timeout_count","total_count"]
 rglog:
