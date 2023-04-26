@@ -75,8 +75,8 @@ func logWatcher(p *parser.Parser) {
 	var t *tail.Tail
 	seek := tail.SeekInfo{
 		Offset: 0,
-		//Whence: 2,
-		Whence: 0,
+		Whence: 2,
+		//Whence: 0,
 	}
 
 	for {

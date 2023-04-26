@@ -1,6 +1,6 @@
 mxlog:
   - regx: |-
-      (?P<datetime>\d{8}\s\d{9}.\d{4})\s(?P<hostname>\S+)\s(?P<module>\S+)\s(?P<pid>\d+)\s\d+\s\d+\s(?P<level>\w+);(?P<event>MsgTrace)\(.+\) *(?P<msgtrc>[^:]+):
+      (?P<datetime>\d{8}\s\d{9}.\d{4})\s(?P<hostname>\S+)\s(?P<module>\S+)\s(?P<pid>\d+)\s\d+\s\d+\s(?P<level>\w+);(?P<event>MsgTrace)\([^)]+\)[ ]?(?P<msgtrc>[a-z ]+)
     tmpl: mxlog_{{.module}}_{{.level}}_{{.event}}_total{id="{{.id}}",msgtrc="{{.msgtrc}}"}
     list: []
   - regx: |-
